@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Day1-android app</string>
+    <string name="frontend">Frontend</string>
+    <string name="hello_world">Hello World!</string>
 </resources>
