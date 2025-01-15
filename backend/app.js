@@ -4,6 +4,7 @@ const path = require("path");
 const mysql = require("mysql2");
 const fs = require("fs");
 const crypto = require("crypto");
+
 const app = express();
 
 app.set("view engine", "ejs");
@@ -20,12 +21,8 @@ const storage = multer.diskStorage({
     cb(null, filename);
   },
 });
-app.get("/", (req, res) => {
-  const data = {
-    message: "Hello Server",
-  };
-  res.render("index", data);
-});
+
+
 const upload = multer({
   storage: storage,
   limits: { fileSize: 5 * 1024 * 1024 },
@@ -47,18 +44,23 @@ const db = mysql.createConnection({
 
 db.connect((err) => {
   if (err) {
-    console.error("Error connecting to the database:", err.stack);
+    console.error("⛓️‍💥 Error connecting to the database:", err.stack);
     return;
   }
-  console.log("Connected to the MySQL database");
+  console.log("✅ Connected to the MySQL database");
 });
 
+
+// INdex.ejs
 app.get("/", (req, res) => {
   const data = {
-    message: "Hello Server",
+    message: `Hello Server (API) `
+
   };
   res.render("index", data);
 });
+
+
 
 // Log Text
 const logDirtext = "logtext";
@@ -110,12 +112,12 @@ app.post("/submit-comment", (req, res) => {
     if (err) {
       console.error("Error inserting comment:", err);
       return res.status(500).send(`<script>
-          alert('Error uploading image');
+          alert('⛓️‍💥 Error uploading image');
           window.location.href = '/';
         </script>`);
     }
     res.send(`<script>
-          alert('Comment submitted successfully');
+          alert('✅ Comment submitted successfully');
           window.location.href = '/';
         </script>`);
   });
@@ -152,12 +154,12 @@ app.post("/upload-image", upload.single("image"), (req, res) => {
     if (err) {
       console.error("Error inserting image info:", err);
       return res.status(500).send(`<script>
-          alert('Error uploading image');
+          alert('⛓️‍💥 Error uploading image');
           window.location.href = '/';
         </script>`);
     }
     res.send(`<script>
-          alert('Comment submitted successfully');
+          alert('✅ Comment submitted successfully');
           window.location.href = '/';
         </script>`);
   });
@@ -177,10 +179,10 @@ fs.appendFileSync(
 function validateApiKey(req, res, next) {
   const requestKey = req.headers["x-api-key"];
   if (!requestKey) {
-    return res.status(401).json({ error: "API key missing" });
+    return res.status(401).json({ error: "⛓️‍💥 API key missing" });
   }
   if (requestKey !== apiKey) {
-    return res.status(403).json({ error: "Invalid API key" });
+    return res.status(403).json({ error: "⛓️‍💥 Invalid API key" });
   }
   next();
 }
@@ -191,7 +193,7 @@ app.get("/secure-data", validateApiKey, (req, res) => {
   db.query(query, (err, results) => {
     if (err) {
       console.error("Error fetching data:", err);
-      return res.status(500).json({ error: "Internal Server Error" });
+      return res.status(500).json({ error: "⛓️‍💥 Internal Server Error" });
     }
     res.json(results);
   });
@@ -212,10 +214,10 @@ fs.appendFileSync(
 function validateApiKey(req, res, next) {
   const requestKey = req.headers["x-api-key"];
   if (!requestKey) {
-    return res.status(401).json({ error: "API key missing" });
+    return res.status(401).json({ error: "⛓️‍💥 API key missing" });
   }
   if (requestKey !== apiKeyimg) {
-    return res.status(403).json({ error: "Invalid API key" });
+    return res.status(403).json({ error: "⛓️‍💥 Invalid API key" });
   }
   next();
 }
@@ -225,8 +227,8 @@ app.get("/secure-data-image", validateApiKey, (req, res) => {
   const query = "SELECT * FROM 	images"; // Example: fetching comments from the database
   db.query(query, (err, results) => {
     if (err) {
-      console.error("Error fetching data:", err);
-      return res.status(500).json({ error: "Internal Server Error" });
+      console.error("⛓️‍💥 Error fetching data:", err);
+      return res.status(500).json({ error: " ⛓️‍💥 Internal Server Error" });
     }
     res.json(results);
   });
@@ -235,10 +237,12 @@ app.get("/secure-data-image", validateApiKey, (req, res) => {
 
 
 
+
+
 // Start the server
 app.listen(3000, () => {
-  console.log(`http://localhost:3000/`);
-  console.log(`API Key(Text): ${apiKey}`);
-  console.log(`API Key(Image): ${apiKeyimg}`);
+  console.log(`✅ Server listening at http://localhost:3000/`);
+  console.log(`✅ API Key(Text): ${apiKey}`);
+  console.log(`✅ API Key(Image): ${apiKeyimg}`);
 
 });
