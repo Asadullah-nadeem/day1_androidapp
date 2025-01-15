@@ -6,15 +6,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="Hello World!"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textAppearance="?attr/textAppearanceBodyLarge"
+        android:textColor="?attr/colorPrimary"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/text"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.6"
+        app:layout_constraintHeight_percent="0.4"
+        app:srcCompat="@drawable/img"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
