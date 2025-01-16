@@ -2,4 +2,6 @@
     <string name="app_name">Day1-android app</string>
     <string name="frontend">Frontend</string>
     <string name="hello_world">Hello World!</string>
+    <string name="todo">TODO</string>
+    <string name="example_text">This is a sample description.</string>
 </resources>
