@@ -131,6 +131,8 @@ app.post("/upload-image", upload.single("image"), (req, res) => {
 
   const imagePath = path.join("uploads", req.file.filename);
   console.log("File uploaded:", req.file);
+  console.log("File uploaded:", imagePath);
+
 
   const logFileName = path.join(
     logDirimage,
@@ -166,7 +168,6 @@ app.post("/upload-image", upload.single("image"), (req, res) => {
 });
 
 // Text only
-
 // Generate and log API key (Text)
 const apiKey = crypto.randomBytes(16).toString("hex");
 const apiLogFile = path.join(apiLogDir, "api_keys.log");
@@ -176,19 +177,23 @@ fs.appendFileSync(
 );
 
 // Middleware to validate API key(text)
-function validateApiKey(req, res, next) {
-  const requestKey = req.headers["x-api-key"];
-  if (!requestKey) {
-    return res.status(401).json({ error: "⛓️‍💥 API key missing" });
+try{
+  function validateApiKey(req, res, next) {
+    const requestKey = req.headers["x-api-key"];
+    if (!requestKey) {
+      return res.status(401).json({ error: "⛓️‍💥 API key missing" });
+    }
+    if (requestKey !== apiKey) {
+      return res.status(403).json({ error: "⛓️‍💥 Invalid API key" });
+    }
+    next();
   }
-  if (requestKey !== apiKey) {
-    return res.status(403).json({ error: "⛓️‍💥 Invalid API key" });
-  }
-  next();
+}catch (error) {
+  console.error(error);
 }
 
 // Secure GET API endpoint (Text)
-app.get("/secure-data", validateApiKey, (req, res) => {
+app.get("/Text-data", validateApiKey, (req, res) => {
   const query = "SELECT * FROM comments"; // Example: fetching comments from the database
   db.query(query, (err, results) => {
     if (err) {
@@ -201,7 +206,6 @@ app.get("/secure-data", validateApiKey, (req, res) => {
 
 
 // Image only
-
 // Generate and log API key (IMage)
 const apiKeyimg = crypto.randomBytes(16).toString("hex");
 const apiLogFileimage = path.join(apilogdirimage, "api_keys.log");
@@ -211,16 +215,21 @@ fs.appendFileSync(
 );
 
 // Middleware to validate API key(text)
-function validateApiKey(req, res, next) {
-  const requestKey = req.headers["x-api-key"];
-  if (!requestKey) {
-    return res.status(401).json({ error: "⛓️‍💥 API key missing" });
+try{
+  function validateApiKey(req, res, next) {
+    const requestKey = req.headers["x-api-key"];
+    if (!requestKey) {
+      return res.status(401).json({ error: "⛓️‍💥 API key missing" });
+    }
+    if (requestKey !== apiKeyimg) {
+      return res.status(403).json({ error: "⛓️‍💥 Invalid API key" });
+    }
+    next();
   }
-  if (requestKey !== apiKeyimg) {
-    return res.status(403).json({ error: "⛓️‍💥 Invalid API key" });
-  }
-  next();
+}catch (error) {
+  console.error(error);
 }
+
 
 // Secure GET API endpoint (Text)
 app.get("/secure-data-image", validateApiKey, (req, res) => {

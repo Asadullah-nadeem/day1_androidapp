@@ -1,7 +1,7 @@
 Text
-curl -H "x-api-key: YOUR_API_KEY" http://localhost:3000/secure-data
+curl -H "x-api-key: YOUR_API_KEY" http://localhost:3000/Text-data
 example
-curl -H "x-api-key: 8aaad127f45bf7dca60977e91bade53d" http://localhost:3000/secure-data
+curl -H "x-api-key: 8aaad127f45bf7dca60977e91bade53d" http://localhost:3000/Text-data
 
 
 Image
