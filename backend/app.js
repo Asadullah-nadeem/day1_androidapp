@@ -161,7 +161,7 @@ app.post("/upload-image", upload.single("image"), (req, res) => {
         </script>`);
     }
     res.send(`<script>
-          alert('✅ Comment submitted successfully');
+          alert('✅ Image submitted successfully');
           window.location.href = '/';
         </script>`);
   });
